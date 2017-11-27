@@ -1,0 +1,41 @@
+# Server settings
+server:
+    port: 8081
+    address: localhost
+
+
+# SPRING PROFILES
+spring:       
+    # HTTP ENCODING
+    http:
+        encoding.charset: UTF-8
+        encoding.enable: true
+        encoding.force: true
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/test
+        username: root
+        password: 110110
+        driverClassName: com.mysql.jdbc.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,log4j
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        
+# MyBatis
+mybatis: 
+    typeAliasesPackage: springboot.model
+    mybatis.mapper-locations: classpath:mappers/*.xml
+# LOGGING
+logging:
+    level:
+        spring.test.dao: DEBUG
