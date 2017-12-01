@@ -9,12 +9,8 @@ import org.springframework.stereotype.Repository;
 import springboot.model.test.User;
 
 
-@Repository
-@Mapper
-public interface UserDao {
- 
-	@Select("select * from user")
-	
-	public List<User> get();
+public interface UserDao  {
+
+	public List<User> getAll();
 	
 }

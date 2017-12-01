@@ -3,6 +3,7 @@ package springboot;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,6 +23,7 @@ import springboot.service.test.IUserService;
 @EnableAutoConfiguration  
 @Configuration
 @ComponentScan
+@MapperScan("springboot.test.dao")
 public class App {
 
 	@Autowired

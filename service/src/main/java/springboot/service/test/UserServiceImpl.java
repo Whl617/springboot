@@ -15,6 +15,6 @@ public class UserServiceImpl implements IUserService{
 	
 	@Override
 	public List<User> get(){ 
-		return userDao.get();
+		return userDao.getAll();
 	}
 }
