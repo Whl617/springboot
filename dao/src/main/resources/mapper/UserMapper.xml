@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="springboot.test.dao.UserDao">
+<mapper namespace="springboot.dao.test.UserDao">
     <select id="getAll"  resultMap="user" >
         select * from user 
     </select>

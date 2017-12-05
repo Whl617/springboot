@@ -38,4 +38,4 @@ mybatis:
 # LOGGING
 logging:
     level:
-        springboot.test.dao: DEBUG
+        springboot.dao: DEBUG

@@ -23,7 +23,7 @@ import springboot.service.test.IUserService;
 @EnableAutoConfiguration  
 @Configuration
 @ComponentScan
-@MapperScan("springboot.test.dao")
+@MapperScan("springboot.dao")
 public class App {
 
 	@Autowired

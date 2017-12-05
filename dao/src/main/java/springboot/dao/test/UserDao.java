@@ -1,4 +1,4 @@
-package springboot.test.dao;
+package springboot.dao.test;
 
 import java.util.List;
 
