@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.dao.goods.GoodsDao">
+	<select id="findById" resultMap="goods" parameterType="java.lang.String">
+		select *
+		from goods where id = #{id}
+	</select>
+
+	<select id="findAll" resultMap="goods">
+		select * from goods limit #{0} ,
+		#{1}
+	</select>
+
+	<select id="findByShopId" resultMap="goods">
+		select * from goods where
+		shop_id = #{0} limit #{1} , #{2}
+	</select>
+
+	<select id="findByClass" resultMap="goods">
+		select * from goods where
+		class = #{0} limit #{1} , #{2}
+	</select>
+
+	<select id="findByLike" resultMap="goods" parameterType="map">
+		select * from goods where 1=1
+		<if test="name != '' and name != null">
+			and name like #{name}
+		</if>
+		<if test="goodsClass != '' and goodsClass != null">
+			and class like #{goodsClass}
+		</if>
+		
+	</select>
+
+	<insert id="insertGoods" parameterType="springboot.model.goods.Goods">
+		insert into goods
+		(id,name,shop_id,price,number,context,class,image)
+		values(#{id},#{name},#{shopId},#{price},#{number},#{context},#{goodsClass},#{image})
+	</insert>
+
+	<update id="updateGoods" parameterType="springboot.model.goods.Goods">
+		update goods SET
+		name=#{name},shop_id=#{shopId},
+		price=#{price},number=#{number},context=#{context},class=#{goodsClass},image=#{image}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteGoods" parameterType="java.lang.String">
+		delete from goods where id = #{id}
+	</delete>
+
+	<resultMap type="springboot.model.goods.Goods" id="goods">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="shopId" column="shop_id" />
+		<result property="price" column="price" />
+		<result property="number" column="number" />
+		<result property="context" column="context" />
+		<result property="goodsClass" column="class" />
+		<result property="image" column="image" />
+	</resultMap>
+</mapper>
