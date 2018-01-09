@@ -23,6 +23,7 @@ public class test {
 	@RequestMapping(value="/home")
 	public String home(HashMap<String, Object> map){
 		map.put("a", "aaa");
-		return "test/home";
+		return "home";
 	}
+    
 }
