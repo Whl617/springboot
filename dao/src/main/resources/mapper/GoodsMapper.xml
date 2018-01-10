@@ -8,19 +8,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from goods where id = #{id}
 	</select>
 
-	<select id="findAll" resultMap="goods">
-		select * from goods limit #{0} ,
-		#{1}
+	<select id="findAll" resultMap="goods" parameterType="int">
+		select * from goods
+		<if test="last >=0">
+			limit #{0} , #{last}
+		</if>
+
+
 	</select>
 
 	<select id="findByShopId" resultMap="goods">
 		select * from goods where
-		shop_id = #{0} limit #{1} , #{2}
+		shop_id = #{0}
+		<if test="last >=0">
+			limit #{1} , #{last}
+		</if>
 	</select>
 
 	<select id="findByClass" resultMap="goods">
 		select * from goods where
-		class = #{0} limit #{1} , #{2}
+		class = #{0}
+		<if test="last >=0">
+			limit #{1} , #{last}
+		</if>
 	</select>
 
 	<select id="findByLike" resultMap="goods" parameterType="map">
@@ -29,9 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and name like #{name}
 		</if>
 		<if test="goodsClass != '' and goodsClass != null">
-			and class like #{goodsClass}
+			or class like #{goodsClass}
 		</if>
-		
+
 	</select>
 
 	<insert id="insertGoods" parameterType="springboot.model.goods.Goods">
@@ -48,7 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<delete id="deleteGoods" parameterType="java.lang.String">
-		delete from goods where id = #{id}
+		delete from goods where
+		id = #{id}
 	</delete>
 
 	<resultMap type="springboot.model.goods.Goods" id="goods">

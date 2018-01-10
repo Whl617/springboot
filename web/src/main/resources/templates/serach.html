@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<script type="text/javascript" src="js/jquery-2.0.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<title>home</title>
+</head>
+<body style="background-color: #CD2626;">
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<nav class="navbar navbar-default " role="navigation">
+				<div class="container-fluid">
+					<div class="col-md-10">
+						<div class="navbar-header">
+							<img src="1.jpg" height="50" width="100" />
+						</div>
+						<div>
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="/home" style="color: red;">首页</a></li>
+								<li><a href="#"></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<ul class="nav navbar-nav">
+								<li><a href="#" style="color: red;">登陆</a></li>
+								<li><a href="#" style="color: red;">注册</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="container">
+		<div style="text-align: center;">
+			<form class="form-search" action="findByLike">
+				<div class="form-inline">
+					<input class="form-control" style="height: 40px; width: 500px;"
+						type="text" name="name" />
+					<button type="submit" class="btn" style="color: red;">查找</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row-fluid">
+			<h3 style="color: white;" th:unless="${#lists.isEmpty(goodsList)}">*搜索结果</h3>
+			<h3 style="color: white;" th:if="${#lists.isEmpty(goodsList)}">*无搜索结果,为您推荐>>></h3>
+			<div class="row-fluid">
+				<ul class="thumbnails" style="list-style-type: none">
+					<li class="col-md-4" th:each="goods : ${goodsList}">
+						<div class="thumbnail">
+							<img alt="300x200" th:src="@{${goods.image}}" height="140"
+								width="140" />
+							<div class="caption" style="text-align: center;">
+								<p>
+									<font th:text="'$'+${goods.price}+' '"></font><a
+										class="btn btn-danger" href="#">购买</a>
+								</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="row-fluid">
+				<ul class="thumbnails" style="list-style-type: none">
+					<li class="col-md-4" th:each="goods : ${goods2}">
+						<div class="thumbnail">
+							<img alt="300x200" th:src="@{${goods.image}}" height="140"
+								width="140" />
+							<div class="caption" style="text-align: center;">
+								<p>
+									<font th:text="'$'+${goods.price}+' '"></font><a
+										class="btn btn-danger" href="#">购买</a>
+								</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div style="text-align: center;">
+				<ul class="pagination">
+				    <li><a style="color: red;"  th:href="@{/findByClass(page=1,class=${goodsClass})}"  th:text="'首页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.currentPage-1},class=${goodsClass})}" th:if="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
+					<li><a style="color: grey;"   th:unless="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.currentPage+1},class=${goodsClass})}" th:if="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
+					<li><a style="color: grey;"  th:unless="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.totalPage},class=${goodsClass})}"  th:text="'尾页'"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
