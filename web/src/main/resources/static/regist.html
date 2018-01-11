@@ -2,38 +2,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>注册</title>
-	<meta name="keywords" content="盒老师">
-	<meta name="content" content="盒老师">
-    <meta http-equiv="X-UA-Compatible" >
-    <link type="text/css" rel="stylesheet" href="css/login.css">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-
+<meta charset="UTF-8">
+<title>注册</title>
+<meta http-equiv="X-UA-Compatible">
+<link type="text/css" rel="stylesheet" href="css/login.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
 </head>
-<body class="login_bj" >
-<div class="zhuce_body" >
-    <div class="zhuce_kong">
-    	<div class="zc" >
-        	<div class="bj_bai" style="text-align:center;">
-            <h3>欢迎注册</h3>
-       	  	  <form action="" method="get">
-                <input name="" type="text" class="kuang_txt phone" placeholder="用户名">
-                <input type="text" value="输入密码" class="kuang_txt possword" onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}" onblur="if(!value) {value=defaultValue; this.type='text';}" style="color:#CCC;" />
-                 <input type="text" value="确认密码" class="kuang_txt possword" onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}" onblur="if(!value) {value=defaultValue; this.type='text';}" style="color:#CCC;" />
-               <input name="" type="text" class="kuang_txt email" placeholder="手机号">
-               
-                <input name="注册" type="button" class="btn_zhuce" value="注册">
-                
-                </form>
-            </div>
-        	
-        </div>
-        <P>shapeng.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎您的注册</P>
-    </div>
 
-</div>
-    
+<script type="text/javascript">
 
+function zc(){
+		$.ajax(
+				{
+		            url: '/regist1',
+		            type: 'post',
+		            contentType: "application/json",
+		            dataType: "json",
+		            data: JSON.stringify({
+		            	'name' : $("#name").val().toString(),
+		            	'password' : $("#password").val().toString(),
+		            	'repassword' : $("#repassword").val().toString(),
+		            	'phone' : $("#phone").val().toString(),
+		            	'type' : $("input[name='type']:checked").val().toString()
+		            	}),
+		            success: function (data) {
+		            	if(data.code==1){
+		            		alert(data.message);
+		            		window.location.href = "/home";
+		            	}
+		            	else{
+		            		alert(data.message);
+		            	}
+		            }
+		     }
+		);
+};
+
+
+
+
+</script>
+<body class="login_bj">
+	<div class="zhuce_body">
+		<div class="zhuce_kong">
+			<div class="zc">
+				<div class="bj_bai" style="text-align: center;">
+					<h3>欢迎注册</h3>
+					<form   id="form1">
+					<div class="container-fluid">
+					<ul style="width:150px; margin:0 auto;">
+					<li style="float: left;text-align: center;" ><input type="radio"
+								name="type" value="商户" >商户&nbsp;&nbsp;&nbsp;&nbsp;</input>
+					</li>
+					<li style="float: left;text-align: center;"><input type="radio"
+								name="type" value="普通用户" >普通用户</input>
+					</li>
+					</ul>
+					</div>
+						<input name="name" type="text" class="kuang_txt phone"
+							placeholder="用户名" id="name"/> 
+							<input type="text" value="输入密码" id="password"
+							class="kuang_txt possword"
+							onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}"
+							onblur="if(!value) {value=defaultValue; this.type='text';}"
+							style="color: #CCC;" name="password" /> 
+							<input type="text"  id="repassword"
+							value="确认密码" class="kuang_txt possword"
+							onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}"
+							onblur="if(!value) {value=defaultValue; this.type='text';}"
+							style="color: #CCC;" name="repassword" /> 
+							<input name="phone"  id="phone"
+							type="text" class="kuang_txt email" placeholder="手机号" /> 
+							
+					</form>
+					<button
+							name="注册"  class="btn_zhuce"  id="zc" onclick="zc()">注册</button>
+				</div>
+			</div>
+			<P>shapeng.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎您的注册</P>
+		</div>
+	</div>
 </body>
 </html>

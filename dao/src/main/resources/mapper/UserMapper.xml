@@ -2,15 +2,49 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="springboot.dao.test.UserDao">
-    <select id="getAll"  resultMap="user" >
-        select * from user 
+<mapper namespace="springboot.dao.user.UserDao">
+    <select id="getAll"  resultMap="user"  parameterType="int" >
+       select * from user
+		<if test="last >=0">
+			limit #{0} , #{last}
+		</if>
     </select>
     
+    <select id="getById" resultMap="user" parameterType="java.lang.String">
+		select *
+		from user where id = #{id}
+	</select>
+	
+    <select id="getByPhone" resultMap="user" parameterType="java.lang.String">
+		select *
+		from user where phone = #{phone}
+	</select>
+	
+	<insert id="insert" parameterType="springboot.model.user.User">
+		insert into user
+		(id,name,password,phone,type)
+		values(#{id},#{name},#{password},#{phone},#{type})
+	</insert>
+	
+	
+	<update id="update" parameterType="springboot.model.user.User">
+		update user SET
+		name=#{name},password=#{password},
+		phone=#{phone},type=#{type}
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from user where
+		id = #{id}
+	</delete>
     
-    <resultMap type="springboot.model.test.User" id="user">
+    
+    <resultMap type="springboot.model.user.User" id="user">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="age" column="age"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="type" column="type"/>
     </resultMap>
 </mapper>

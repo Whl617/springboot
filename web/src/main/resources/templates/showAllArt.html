@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=1343px, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script type="text/javascript" src="js/jquery-2.0.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<title>home</title>
+</head>
+<body style="background: url(../images/bg.jpg) repeat 0px 0px">
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<nav class="navbar navbar-default " role="navigation">
+				<div class="container-fluid">
+					<div class="col-md-10">
+						<div class="navbar-header">
+							<img src="1.jpg" height="50" width="100" />
+						</div>
+						<div>
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="/home" style="color: red;">首页</a></li>
+								<li><a href="/addArtPage" style="color: red;"
+									th:if="${session.user != null}">发表推荐</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div>
+							<ul class="nav navbar-nav" th:if="${session.user != null}">
+								<li><a href=""
+									style="color: red; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;"
+									th:text="'hello,'+${session.user.name}"></a></li>
+								<li><a href="" onclick="logout()"
+									style="color: red; width: 100%;">注销</a></li>
+							</ul>
+							<ul class="nav navbar-nav" th:if="${session.user == null}"
+								style="text-align: center;">
+								<li><a href="login.html" style="color: red; width: 120px;">登陆</a></li>
+								<li><a href="regist.html" style="color: red;">注册</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="container" >
+		<table class="table">
+			<thead>
+				<tr>
+					<th>标题</th>
+					<th>类型</th>
+					<th>作者</th>
+					<th>发表时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="success" th:each="article : ${art}">
+					<td >
+					<a
+						th:href="@{/findArt(id=${article.id})}"
+						style=" display: block; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+						th:text="${article.name}"> </a></td>
+					<td th:text="${article.goodsclass}"></td>
+					<td th:text="${article.username}"></td>
+					<td th:text="${article.createtime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div style="text-align: center;">
+				<ul class="pagination">
+				    <li><a style="color: red;"  th:href="@{/getAllArticle(page=1,point=point)}"  th:text="'首页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/getAllArticle(page=${page.currentPage-1},point=point)}" th:if="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
+					<li><a style="color: grey;"   th:unless="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/getAllArticle(page=${page.currentPage+1},point=point)}" th:if="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
+					<li><a style="color: grey;"  th:unless="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
+					<li><a style="color: red;"  th:href="@{/getAllArticle(page=${page.totalPage},point=point)}"  th:text="'尾页'"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

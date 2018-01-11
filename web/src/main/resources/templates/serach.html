@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8" name="viewport" content="width=1343px, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <script type="text/javascript" src="js/jquery-2.0.0.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <title>home</title>
+<script type="text/javascript">
+function logout(){
+	$.ajax(
+			{
+	            url: '/logout',
+	            type: 'post',
+	            contentType: "application/json",
+	            dataType: "json",
+	            data: JSON.stringify({}),
+	            success: function (data) {
+	            	if(data.code==1){
+	            		alert(data.message);
+	            		window.location.href = "/home";
+	            	}
+	            	else{
+	            		alert(data.message);
+	            	}
+	            }
+	     }
+	);
+};
+
+</script>
 </head>
-<body style="background-color: #CD2626;">
+<body style="background:url(../images/bg1.jpg) repeat 0px 0px">
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<nav class="navbar navbar-default " role="navigation">
@@ -25,9 +48,13 @@
 					</div>
 					<div class="col-md-2">
 						<div>
-							<ul class="nav navbar-nav">
-								<li><a href="#" style="color: red;">登陆</a></li>
-								<li><a href="#" style="color: red;">注册</a></li>
+							<ul class="nav navbar-nav" th:if="${session.user != null}" >
+								<li><a  href="" style="color: red;word-break:keep-all;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;width: 120px;" th:text="'hello,'+${session.user.name}"></a></li>
+							    <li><a  href="" onclick="logout()" style="color: red;width: 100%;" >注销</a></li>
+							</ul>
+							<ul class="nav navbar-nav" th:if="${session.user == null}" style="text-align: center;">
+								<li><a href="login.html" style="color: red;width: 120px;">登陆</a></li>
+								<li><a href="regist.html" style="color: red;">注册</a></li>
 							</ul>
 						</div>
 					</div>
@@ -41,7 +68,7 @@
 				<div class="form-inline">
 					<input class="form-control" style="height: 40px; width: 500px;"
 						type="text" name="name" />
-					<button type="submit" class="btn" style="color: red;">查找</button>
+					<button type="submit" class="btn" >查找</button>
 				</div>
 			</form>
 		</div>
@@ -53,9 +80,9 @@
 			<div class="row-fluid">
 				<ul class="thumbnails" style="list-style-type: none">
 					<li class="col-md-4" th:each="goods : ${goodsList}">
-						<div class="thumbnail">
-							<img alt="300x200" th:src="@{${goods.image}}" height="140"
-								width="140" />
+						<div class="thumbnail" style="height: 200px;">
+							<img alt="300x200" th:src="@{${goods.image}}" height="80%"
+								width="auto" />
 							<div class="caption" style="text-align: center;">
 								<p>
 									<font th:text="'$'+${goods.price}+' '"></font><a
@@ -69,9 +96,9 @@
 			<div class="row-fluid">
 				<ul class="thumbnails" style="list-style-type: none">
 					<li class="col-md-4" th:each="goods : ${goods2}">
-						<div class="thumbnail">
-							<img alt="300x200" th:src="@{${goods.image}}" height="140"
-								width="140" />
+						<div class="thumbnail" style="height: 200px;">
+							<img alt="300x200" th:src="@{${goods.image}}" height="80%"
+								width="auto" />
 							<div class="caption" style="text-align: center;">
 								<p>
 									<font th:text="'$'+${goods.price}+' '"></font><a

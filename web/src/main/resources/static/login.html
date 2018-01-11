@@ -2,9 +2,15 @@
 <html>
 <head>
 <title>Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"
+	charset="UTF-8" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="application/x-javascript">
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 </script>
 <meta name="keywords"
 	content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates" />
@@ -28,9 +34,30 @@
 				});
 			});
 		});
+
+		function login() {
+			$.ajax({
+				url : '/login1',
+				type : 'post',
+				contentType : "application/json",
+				dataType : "json",
+				data : JSON.stringify({
+					'password' : $("#password").val().toString(),
+					'phone' : $("#phone").val().toString(),
+				}),
+				success : function(data) {
+					if (data.code == 1) {
+						alert(data.message);
+						window.location.href = "/home";
+					} else {
+						alert(data.message);
+					}
+				}
+			});
+		};
 	</script>
 	<!--SIGN UP-->
-	<h1>用戶登錄</h1>
+	<h1>用户登录</h1>
 	<div class="login-form">
 		<div class="close"></div>
 		<div class="head-info">
@@ -42,16 +69,19 @@
 			<img src="images/avtar.png" />
 		</div>
 		<form>
-			<input type="text" class="text" value="Username"
-				onfocus="this.value = '';"
-				onblur="if (this.value == '') {this.value = 'Username';}">
+			<input type="text" class="text" value="PhoneNum"
+				onfocus="if (this.value == 'PhoneNum') {this.value = '';}"
+				onblur="if (this.value == '') {this.value = 'PhoneNum';}"
+				name="phone" id="phone">
 			<div class="key">
-				<input type="password" value="Password" onfocus="this.value = '';"
-					onblur="if (this.value == '') {this.value = 'Password';}">
+				<input type="password" value="Password"
+					onfocus="if (this.value == 'Password') {this.value = '';}"
+					onblur="if (this.value == '') {this.value = 'Password';}"
+					name="password" id="password">
 			</div>
 		</form>
 		<div class="signin">
-			<input type="submit" value="Login">
+			<input type="submit" value="Login" onclick="login()">
 		</div>
 	</div>
 </body>

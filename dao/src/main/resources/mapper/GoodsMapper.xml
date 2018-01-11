@@ -13,8 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="last >=0">
 			limit #{0} , #{last}
 		</if>
-
-
 	</select>
 
 	<select id="findByShopId" resultMap="goods">

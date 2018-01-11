@@ -2,10 +2,10 @@ package springboot.model.shop;
 
 public class Shop {
 
-	String id;
-	String name;
-	String context;
-	String user;
+	private String id;
+	private String name;
+	private String context;
+	private String user;
 
 	public String getId() {
 		return id;

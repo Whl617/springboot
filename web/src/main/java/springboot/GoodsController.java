@@ -17,7 +17,7 @@ import springboot.service.goods.IGoodsService;
 import springboot.utils.Page;
 import springboot.utils.PageUtil;
 
-@Controller(value="/goods")
+@Controller
 public class GoodsController {
 
 	@Autowired
@@ -73,7 +73,6 @@ public class GoodsController {
 			@RequestParam(name="page") int page,
 		HashMap<String, Object> hashMap){
 		Page page2=PageUtil.createPage(12, goodsService.findByClass(goodsClass,0, -1).size(), page);
-		System.out.println(page2.getCurrentPage());
 		List<Goods> list=goodsService.findByClass(goodsClass, (page2.getCurrentPage()-1)*12, 12);
 		hashMap.put("goodsList", list);
 		hashMap.put("goodsClass", goodsClass);
@@ -96,7 +95,7 @@ public class GoodsController {
 			List<Goods> list2=goodsService.findAll((int)(Math.random()*size), 15);
 			hashMap.put("goods2", list2);
 		}
-		return "serach1";
+		return "likeSerach";
 	}
 	
 	

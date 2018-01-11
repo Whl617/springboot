@@ -2,8 +2,8 @@ package springboot.model.goodsClass;
 
 public class GoodsClass {
 
-	String id;
-	String name;
+	private String id;
+	private String name;
 	
 	
 	public String getId() {

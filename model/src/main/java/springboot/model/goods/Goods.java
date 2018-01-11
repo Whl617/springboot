@@ -1,14 +1,14 @@
 package springboot.model.goods;
 
 public class Goods {
-	String id;
-	String name;
-	String shopId;
-	double price;
-	int number;
-	String context;
-	String goodsClass;
-	String image;
+	private String id;
+	private String name;
+	private String shopId;
+	private double price;
+	private int number;
+	private String context;
+	private String goodsClass;
+	private String image;
 
 	public String getId() {
 		return id;
