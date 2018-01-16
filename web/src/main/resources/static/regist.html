@@ -11,8 +11,65 @@
 </head>
 
 <script type="text/javascript">
+function jiaoyan(){
+	var phone=String($('#phone').val());
+	var name=String($('#name').val());
+	var password=String($('#password').val());
+	var repassword=String($('#repassword').val());
+	 var pattern = /^1[34578]\d{9}$/; 
+	 if($('#name').val().length >  10)
+		{
+			alert('名称长度不能超过10');
+			$('#name').val(name.substring(0,10));
+			return ;
+		}
+	 if($('#password').val().length >  10)
+		{
+			alert('密码长度6-10之间');
+			$('#password').val('');
+			return ;
+		}
+	 if($("#repassword").val().length >  10)
+		{
+		    alert('密码长度6-10之间');
+			$("#repassword").val('');
+			return ;
+		}
+	 if((repassword != null && repassword != ''&&$("#repassword").val().length>0) && password != repassword){
+		    alert('两次密码不一致');
+			$("#repassword").val('');
+			return ;
+	 }
+	 if(pattern.test(phone)==false){
+		 if(phone == null || phone ==undefined || phone == ''){
+			 return;
+		 }
+		 alert("手机号格式不正确");
+		 $('#phone').val('');
+	 }
+}
 
 function zc(){
+	var phone=String($('#phone').val());
+	var name=String($('#name').val());
+	var password=String($('#password').val());
+	var repassword=String($('#repassword').val());
+	if(name == null || name ==undefined || name == ''){
+		alert("用户名不能为空");
+		return;
+	}
+	if(phone == null || phone ==undefined || phone == ''){
+		alert("手机号不能为空");
+		return;
+	}
+	if(password == null || password ==undefined || password == ''){
+		alert("密码不能为空");
+		return;
+	}
+	if(repassword == null || repassword ==undefined || repassword == ''){
+		alert("确认密码不能为空");
+		return;
+	}
 		$.ajax(
 				{
 		            url: '/regist1',
@@ -56,31 +113,26 @@ function zc(){
 								name="type" value="商户" >商户&nbsp;&nbsp;&nbsp;&nbsp;</input>
 					</li>
 					<li style="float: left;text-align: center;"><input type="radio"
-								name="type" value="普通用户" >普通用户</input>
+								name="type" value="普通用户" checked="checked">普通用户</input>
 					</li>
 					</ul>
 					</div>
 						<input name="name" type="text" class="kuang_txt phone"
-							placeholder="用户名" id="name"/> 
-							<input type="text" value="输入密码" id="password"
+							placeholder="用户名" id="name" onchange="jiaoyan()"/> 
+							<input type="password" placeholder="输入密码" id="password"
 							class="kuang_txt possword"
-							onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}"
-							onblur="if(!value) {value=defaultValue; this.type='text';}"
-							style="color: #CCC;" name="password" /> 
-							<input type="text"  id="repassword"
-							value="确认密码" class="kuang_txt possword"
-							onfocus="if(this.value==defaultValue) {this.value='';this.type='password'}"
-							onblur="if(!value) {value=defaultValue; this.type='text';}"
-							style="color: #CCC;" name="repassword" /> 
+							style="color: #CCC;" name="password" onchange="jiaoyan()"/> 
+							<input type="password"  id="repassword"
+							placeholder="确认密码" class="kuang_txt possword"
+							style="color: #CCC;" name="repassword" onchange="jiaoyan()"/> 
 							<input name="phone"  id="phone"
-							type="text" class="kuang_txt email" placeholder="手机号" /> 
+							type="text" class="kuang_txt email" placeholder="手机号" onchange="jiaoyan()"/> 
 							
 					</form>
 					<button
 							name="注册"  class="btn_zhuce"  id="zc" onclick="zc()">注册</button>
 				</div>
 			</div>
-			<P>shapeng.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎您的注册</P>
 		</div>
 	</div>
 </body>

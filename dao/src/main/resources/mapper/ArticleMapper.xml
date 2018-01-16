@@ -16,16 +16,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
     </select>
     
+    <select id="findMAll"    resultType="int">
+       select count(*) from article where DATE_SUB(CURDATE(), INTERVAL 30 DAY)  <![CDATA[<=date(createtime)]]>
+		
+    </select>
+    
+    <select id="findUser"  resultMap="article"   >
+       select * from article 
+       where user_id = #{userid}
+        order by
+		 createtime desc
+		<if test="last >=0">
+			limit #{0} , #{last}
+		</if>
+		
+    </select>
+    
     <select id="get" resultMap="article" parameterType="java.lang.String">
 		select *
 		from article where id = #{id}
 	</select>
 	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from article where
+		id = #{id}
+	</delete>
 	
 	<insert id="insert" parameterType="springboot.model.article.Article">
 		insert into article
-		(id,name,content,username,class,createtime,point)
-		values(#{id},#{name},#{content},#{username},#{goodsclass},#{createtime},#{point})
+		(id,name,content,username,class,createtime,point,user_id)
+		values(#{id},#{name},#{content},#{username},#{goodsclass},#{createtime},#{point},#{userid})
 	</insert>
 	
 	<update id="update" parameterType="springboot.model.article.Article">
@@ -42,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name" column="name"/>
         <result property="content" column="content"/>
         <result property="username" column="username"/>
+        <result property="userid" column="user_id"/>
         <result property="goodsclass" column="class"/>
         <result property="createtime" column="createtime"/>
         <result property="point" column="point"/>

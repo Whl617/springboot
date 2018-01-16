@@ -5,18 +5,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="springboot.dao.goods.GoodsDao">
 	<select id="findById" resultMap="goods" parameterType="java.lang.String">
 		select *
-		from goods where id = #{id}
+		from goods where id = #{id} and type=0
 	</select>
 
 	<select id="findAll" resultMap="goods" parameterType="int">
-		select * from goods
+		select * from goods where type = 0
 		<if test="last >=0">
 			limit #{0} , #{last}
 		</if>
 	</select>
 
 	<select id="findByShopId" resultMap="goods">
-		select * from goods where
+		select * from goods where type = 0 and
 		shop_id = #{0}
 		<if test="last >=0">
 			limit #{1} , #{last}
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="findByClass" resultMap="goods">
-		select * from goods where
+		select * from goods where type=0 and
 		class = #{0}
 		<if test="last >=0">
 			limit #{1} , #{last}
@@ -32,10 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="findByLike" resultMap="goods" parameterType="map">
-		select * from goods where 1=1
+		select * from goods where 1=1 and type=0
 		<if test="name != '' and name != null">
 			and name like #{name}
 		</if>
+		
+		<if test="shopId != '' and shopId != null">
+			and shop_id like #{shopId}
+		</if>
+		
 		<if test="goodsClass != '' and goodsClass != null">
 			or class like #{goodsClass}
 		</if>
@@ -44,19 +49,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertGoods" parameterType="springboot.model.goods.Goods">
 		insert into goods
-		(id,name,shop_id,price,number,context,class,image)
-		values(#{id},#{name},#{shopId},#{price},#{number},#{context},#{goodsClass},#{image})
+		(id,name,shop_id,price,number,context,class,image,type)
+		values(#{id},#{name},#{shopId},#{price},#{number},#{context},#{goodsClass},#{image},#{type})
 	</insert>
 
 	<update id="updateGoods" parameterType="springboot.model.goods.Goods">
 		update goods SET
 		name=#{name},shop_id=#{shopId},
-		price=#{price},number=#{number},context=#{context},class=#{goodsClass},image=#{image}
+		price=#{price},number=#{number},context=#{context},class=#{goodsClass},image=#{image},type=#{type}
 		where id=#{id}
 	</update>
 
 	<delete id="deleteGoods" parameterType="java.lang.String">
-		delete from goods where
+		delete from goods 
 		id = #{id}
 	</delete>
 
@@ -69,5 +74,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="context" column="context" />
 		<result property="goodsClass" column="class" />
 		<result property="image" column="image" />
+		<result property="type" column="type" />
 	</resultMap>
 </mapper>

@@ -5,8 +5,73 @@
 <script type="text/javascript" src="js/jquery-2.0.0.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<link href="css/javaniu.css" rel="stylesheet" />
 <title>home</title>
 <script type="text/javascript">
+$(function() {
+	var timeout;
+
+$('.profile').hover(function() {
+
+    pos = $(this).offset();
+
+    timeout = setTimeout(function() {
+
+        $('.hovercard').fadeIn().css({
+            'top': pos.top - 50 + 'px',  // subtract 20px to account for padding
+            'left': pos.left - 50 + 'px'
+        });
+
+    }, 500);
+
+}, function() {
+    clearTimeout(timeout);
+});
+
+$('.hovercard').mouseleave(function() {
+    $('.hovercard').fadeOut();
+});
+
+});
+</script>
+<style type="text/css">
+	
+
+	.hovercard {
+		display: none;
+		position: absolute;
+		height: 100px;
+		padding: 20px 20px 20px 90px;
+		z-index: 1;
+	}
+	 </style>
+<script type="text/javascript">
+   function addM(){
+	   var money=prompt("输入充值金额");
+	   var fix_amountTest=/^(([1-9]\d*)|\d)(\.\d{1,2})?$/;
+	   if(money!=null){
+		   if( fix_amountTest.test(money)==false){
+			   alert("请输入正确金额");
+		   }
+		   else{
+			   $.ajax({
+					url : '/addmoney?money='+money,
+					type : 'post',
+					dataType : "json",
+					success : function(data) {
+						if (data.code == 1) {
+							alert(data.message);
+							window.location.href = "/home";
+						} else {
+							alert(data.message);
+						}
+					}
+				});
+		   }
+	   }
+	   
+   }
+ 
 function logout(){
 	$.ajax(
 			{
@@ -30,31 +95,51 @@ function logout(){
 
 </script>
 </head>
-<body style="background:url(../images/bg1.jpg) repeat 0px 0px">
+<body style="background-color: #e83232;">
+ <div class="hovercard main"  th:if="${session.user!=null}">
+		<div class="hovercontent">
+		<div class="right_bar">
+			<div class="user">
+				<div class="row-fluid margin_top10" style="width: 300px;height: auto;">
+					<div class="span6">
+						<p th:text="'姓名:&nbsp;'+${session.user.name}"></p>
+						<p th:text="'身份:&nbsp;'+${session.user.type}"></p>
+						<p th:text="'余额:&nbsp;'+${#numbers.formatDecimal(session.user.money, 0, 2)}+'&nbsp;元'" th:if="${session.user.money}>0"></p>
+						<p th:text="'余额:&nbsp;'+${session.user.money}+'&nbsp;元'" th:unless="${session.user.money}>0"></p>
+						<a href="/UUPage">个人信息修改</a>&nbsp;&nbsp;<a onclick="addM()">账户充值</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<nav class="navbar navbar-default " role="navigation">
 				<div class="container-fluid">
 					<div class="col-md-10">
 						<div class="navbar-header">
-							<img src="1.jpg" height="50" width="100" />
+							<img src="1.jpg" height="50" width="auto" />
 						</div>
 						<div>
 							<ul class="nav navbar-nav">
-								<li class="active"><a href="/home" style="color: red;">首页</a></li>
-								<li><a href="#"></a></li>
+								<li><a href="/home" style="color: #e83232;">首页</a></li>
+								<li><a href="/getUserArticle?page=1" style="color: #e83232;" th:if="${session.user != null}">我的推荐</a></li>
+								<li><a href="/findAllG?page=1" style="color: #e83232;" th:if="${session.user != null}">我的购物记录</a></li>
+								<li><a href="/findByShop?page=1" style="color: #e83232;" th:if="${session.user != null} and (${session.user.type=='商户'})">我的商铺</a></li>
+							    <li><a href="/findAllB?page=1" style="color: #e83232;" th:if="${session.user != null} and (${session.user.type=='商户'})">我的售出记录</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-md-2">
 						<div>
 							<ul class="nav navbar-nav" th:if="${session.user != null}" >
-								<li><a  href="" style="color: red;word-break:keep-all;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;width: 120px;" th:text="'hello,'+${session.user.name}"></a></li>
-							    <li><a  href="" onclick="logout()" style="color: red;width: 100%;" >注销</a></li>
+								<li><a  href="" style="color: #e83232;word-break:keep-all;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;width: 120px;" th:text="'hello,'+${session.user.name}" class="profile"></a></li>
+							    <li><a  href="" onclick="logout()" style="color: #e83232;width: 100%;" >注销</a></li>
 							</ul>
 							<ul class="nav navbar-nav" th:if="${session.user == null}" style="text-align: center;">
-								<li><a href="login.html" style="color: red;width: 120px;">登陆</a></li>
-								<li><a href="regist.html" style="color: red;">注册</a></li>
+								<li><a href="login.html" style="color: #e83232;width: 120px;">登陆</a></li>
+								<li><a href="regist.html" style="color: #e83232;">注册</a></li>
 							</ul>
 						</div>
 					</div>
@@ -68,25 +153,25 @@ function logout(){
 				<div class="form-inline">
 					<input class="form-control" style="height: 40px; width: 500px;"
 						type="text" name="name" />
-					<button type="submit" class="btn" >查找</button>
+					<button type="submit" class="btn" style="background-color:#fff;color: #e83232;">搜索</button>
 				</div>
 			</form>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row-fluid">
-			<h3 style="color: white;" th:unless="${#lists.isEmpty(goodsList)}">*搜索结果</h3>
-			<h3 style="color: white;" th:if="${#lists.isEmpty(goodsList)}">*无搜索结果,为您推荐>>></h3>
+			<h3 style="color: #fff;" th:unless="${#lists.isEmpty(goodsList)}">搜索结果</h3>
+			<h3 style="color: #fff;" th:if="${#lists.isEmpty(goodsList)}">此类商品无搜索结果，为您推荐>>></h3>
 			<div class="row-fluid">
 				<ul class="thumbnails" style="list-style-type: none">
 					<li class="col-md-4" th:each="goods : ${goodsList}">
-						<div class="thumbnail" style="height: 200px;">
-							<img alt="300x200" th:src="@{${goods.image}}" height="80%"
-								width="auto" />
+						<div class="thumbnail" style="height: 220px;">
+							<img alt="300x200" th:src="@{/load(fileName=${goods.image})}" height="80%"
+								width="auto" style="max-height: 80%;max-width: 300px;" />
 							<div class="caption" style="text-align: center;">
 								<p>
-									<font th:text="'$'+${goods.price}+' '"></font><a
-										class="btn btn-danger" href="#">购买</a>
+									<font color="#e83232" th:text="'$'+${#numbers.formatDecimal(goods.price, 0, 2)}+' '"></font><a
+										class="btn btn-danger" th:href="@{/findById(id=${goods.id})}">购买</a>
 								</p>
 							</div>
 						</div>
@@ -96,13 +181,13 @@ function logout(){
 			<div class="row-fluid">
 				<ul class="thumbnails" style="list-style-type: none">
 					<li class="col-md-4" th:each="goods : ${goods2}">
-						<div class="thumbnail" style="height: 200px;">
-							<img alt="300x200" th:src="@{${goods.image}}" height="80%"
-								width="auto" />
+						<div class="thumbnail" style="height: 220px;">
+							<img alt="300x200" th:src="@{/load(fileName=${goods.image})}" height="auto"
+								width="auto" style="max-height: 80%;max-width: 300px;" />
 							<div class="caption" style="text-align: center;">
 								<p>
-									<font th:text="'$'+${goods.price}+' '"></font><a
-										class="btn btn-danger" href="#">购买</a>
+									<font color="#e83232"  th:text="'$'+${#numbers.formatDecimal(goods.price, 0, 2)}+' '"></font><a
+										class="btn btn-danger" th:href="@{/findById(id=${goods.id})}">购买</a>
 								</p>
 							</div>
 						</div>
@@ -111,16 +196,16 @@ function logout(){
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container-fluid"  th:unless="${#lists.isEmpty(goodsList)}">
 		<div class="row-fluid">
 			<div style="text-align: center;">
 				<ul class="pagination">
-				    <li><a style="color: red;"  th:href="@{/findByClass(page=1,class=${goodsClass})}"  th:text="'首页'"></a></li>
-					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.currentPage-1},class=${goodsClass})}" th:if="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
+				    <li><a style="color: #e83232;"  th:href="@{/findByClass(page=1,class=${goodsClass})}"  th:text="'首页'"></a></li>
+					<li><a style="color: #e83232;"  th:href="@{/findByClass(page=${page.currentPage-1},class=${goodsClass})}" th:if="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
 					<li><a style="color: grey;"   th:unless="${page.currentPage &gt; 1}" th:text="'上一页'"></a></li>
-					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.currentPage+1},class=${goodsClass})}" th:if="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
+					<li><a style="color: #e83232;"  th:href="@{/findByClass(page=${page.currentPage+1},class=${goodsClass})}" th:if="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
 					<li><a style="color: grey;"  th:unless="${page.currentPage &lt; page.totalPage}" th:text="'下一页'"></a></li>
-					<li><a style="color: red;"  th:href="@{/findByClass(page=${page.totalPage},class=${goodsClass})}"  th:text="'尾页'"></a></li>
+					<li><a style="color: #e83232;"  th:href="@{/findByClass(page=${page.totalPage},class=${goodsClass})}"  th:text="'尾页'"></a></li>
 				</ul>
 			</div>
 		</div>

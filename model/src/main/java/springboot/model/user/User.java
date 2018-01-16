@@ -7,6 +7,7 @@ public class User {
 	private String password;
 	private String phone;
 	private String type;
+	private double money;
 	public String getId() {
 		return id;
 	}
@@ -36,6 +37,12 @@ public class User {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public double getMoney() {
+		return money;
+	}
+	public void setMoney(double money) {
+		this.money = money;
 	}
 
 	

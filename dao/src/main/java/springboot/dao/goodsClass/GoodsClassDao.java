@@ -17,4 +17,5 @@ public interface GoodsClassDao {
 	public List<GoodsClass> findBypage(int first,int last);
 	
 	public List<GoodsClass> findByName(String name);
+	public GoodsClass findById(String id);
 }

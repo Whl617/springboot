@@ -48,4 +48,10 @@ public class GoodsClassService implements IGoodsClassService{
 		return goodsClassDao.findByName(name);
 	}
 
+	@Override
+	public GoodsClass findById(String id) {
+		// TODO Auto-generated method stub
+		return goodsClassDao.findById(id);
+	}
+
 }

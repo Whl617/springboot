@@ -8,7 +8,9 @@
 <script type="application/x-javascript">
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 </script>
@@ -16,14 +18,14 @@
 	content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates" />
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <!--webfonts-->
-<link
+<!-- <link
 	href='http://fonts.useso.com/css?family=PT+Sans:400,700,400italic,700italic|Oswald:400,300,700'
 	rel='stylesheet' type='text/css'>
 <link href='http://fonts.useso.com/css?family=Exo+2' rel='stylesheet'
-	type='text/css'>
+	type='text/css'> -->
 <!--//webfonts-->
-<script
-	src="http://ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- <script
+	src="http://ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
 </head>
 <body>
 	<script>
@@ -36,6 +38,16 @@
 		});
 
 		function login() {
+			var phone=String($('#phone').val());
+			var password=String($('#password').val());
+			if(phone == null || phone ==undefined || phone == ''){
+				alert("手机号不能为空");
+				return;
+			}
+			if(password == null || password ==undefined || password == ''){
+				alert("密码不能为空");
+				return;
+			}
 			$.ajax({
 				url : '/login1',
 				type : 'post',
@@ -49,12 +61,29 @@
 					if (data.code == 1) {
 						alert(data.message);
 						window.location.href = "/home";
-					} else {
+					} 
+					else if(data.code == 2){
+						alert(data.message);
+						window.location.href = "/main";
+					}
+					else {
 						alert(data.message);
 					}
 				}
 			});
 		};
+	function jiaoyan(){
+		var phone=String($('#phone').val());
+		 var pattern = /^1[34578]\d{9}$/; 
+	
+		 if(pattern.test(phone)==false){
+			 if(phone == null || phone ==undefined || phone == ''){
+				 return;
+			 }
+			 alert("手机号格式不正确");
+			 $('#phone').val('');
+		 }
+	}
 	</script>
 	<!--SIGN UP-->
 	<h1>用户登录</h1>
@@ -69,15 +98,11 @@
 			<img src="images/avtar.png" />
 		</div>
 		<form>
-			<input type="text" class="text" value="PhoneNum"
-				onfocus="if (this.value == 'PhoneNum') {this.value = '';}"
-				onblur="if (this.value == '') {this.value = 'PhoneNum';}"
-				name="phone" id="phone">
+			<input type="text" class="text" 
+				name="phone" id="phone" placeholder="请输入手机号" onchange="jiaoyan()">
 			<div class="key">
-				<input type="password" value="Password"
-					onfocus="if (this.value == 'Password') {this.value = '';}"
-					onblur="if (this.value == '') {this.value = 'Password';}"
-					name="password" id="password">
+				<input type="password" 
+					name="password" id="password" placeholder="请输入密码">
 			</div>
 		</form>
 		<div class="signin">

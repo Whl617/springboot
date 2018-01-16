@@ -1,0 +1,153 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>个人信息修改</title>
+<meta http-equiv="X-UA-Compatible" />
+<link type="text/css" rel="stylesheet" href="css/login.css" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<script type="text/javascript">
+function jiaoyan(){
+	var phone=String($('#phone').val());
+	var name=String($('#name').val());
+	var password=String($('#password').val());
+	var repassword=String($('#repassword').val());
+	 var pattern = /^1[34578]\d{9}$/; 
+	 if($('#name').val().length >  10)
+		{
+			alert('名称长度不能超过10');
+			$('#name').val(name.substring(0,10));
+			return ;
+		}
+	 if($('#password').val().length >  10)
+		{
+			alert('密码长度6-10之间');
+			$('#password').val('');
+			return ;
+		}
+	 if($("#repassword").val().length >  10)
+		{
+		    alert('密码长度6-10之间');
+			$("#repassword").val('');
+			return ;
+		}
+	 if(repassword != null ){
+		    if(repassword != '')
+		    	{
+		    	if($("#repassword").val().length>0)
+		    		{
+		    		if( password != repassword){
+		    			 alert('两次密码不一致');
+		    				$("#repassword").val('');
+		    				return ;
+		    		}
+		    		}
+		    	}
+	 }
+	 if(pattern.test(phone)==false){
+		 if(phone == null || phone ==undefined || phone == ''){
+			 return;
+		 }
+		 alert("手机号格式不正确");
+		 $('#phone').val('');
+	 }
+}
+
+function zc(){
+	var phone=String($('#phone').val());
+	var name=String($('#name').val());
+	var password=String($('#password').val());
+	var repassword=String($('#repassword').val());
+	if(name == null || name ==undefined || name == ''){
+		alert("用户名不能为空");
+		return;
+	}
+	if(phone == null || phone ==undefined || phone == ''){
+		alert("手机号不能为空");
+		return;
+	}
+	if(password == null || password ==undefined || password == ''){
+		alert("密码不能为空");
+		return;
+	}
+	if(repassword == null || repassword ==undefined || repassword == ''){
+		alert("确认密码不能为空");
+		return;
+	}
+		$.ajax(
+				{
+		            url: '/updateUser',
+		            type: 'post',
+		            contentType: "application/json",
+		            dataType: "json",
+		            data: JSON.stringify({
+		            	'name' : $("#name").val().toString(),
+		            	'password' : $("#password").val().toString(),
+		            	'repassword' : $("#repassword").val().toString(),
+		            	'phone' : $("#phone").val().toString(),
+		            	'id' : $('#userID').val().toString(),
+		            	'type' : $("input[name='type']:checked").val().toString()
+		            	}),
+		            success: function (data) {
+		            	if(data.code==1){
+		            		alert(data.message);
+		            		window.location.href = "/home";
+		            	}
+		            	else{
+		            		alert(data.message);
+		            	}
+		            }
+		     }
+		);
+};
+
+
+
+
+</script>
+<body class="login_bj">
+	<div class="zhuce_body">
+		<div class="zhuce_kong">
+			<div class="zc">
+				<div class="bj_bai" style="text-align: center;">
+					<h3>信息修改</h3>
+					<form id="form1">
+						<div class="container-fluid">
+							<ul style="width: 150px; margin: 0 auto;">
+								<li style="float: left; text-align: center;" th:if="${user.type=='商户'}"><input
+									type="radio" name="type" value="商户" checked="checked"
+									>商户&nbsp;&nbsp;&nbsp;&nbsp;</input></li>
+								<li style="float: left; text-align: center;" th:unless="${user.type=='商户'}"><input
+									type="radio" name="type" value="商户"
+									>商户&nbsp;&nbsp;&nbsp;&nbsp;</input>
+								</li>
+								<li style="float: left; text-align: center;" th:if="${user.type=='普通用户'}"><input
+									type="radio" name="type" value="普通用户" checked="checked"
+									>普通用户</input></li>
+								<li style="float: left; text-align: center;" th:unless="${user.type=='普通用户'}"><input
+									type="radio" name="type" value="普通用户"
+									>普通用户</input></li>
+							</ul>
+						</div>
+						<input name="name" type="text" class="kuang_txt phone"
+							placeholder="用户名" id="name" onchange="jiaoyan()"
+							th:value="${user.name}" /> <input type="password"
+							th:value="${user.password}" id="password"
+							class="kuang_txt possword" style="color: #CCC;" name="password"
+							onchange="jiaoyan()" /> <input type="password" id="repassword"
+							th:value="${user.password}" class="kuang_txt possword"
+							style="color: #CCC;" name="repassword" onchange="jiaoyan()" /> <input
+							name="phone" id="phone" th:value="${user.phone}" type="text"
+							class="kuang_txt email" placeholder="手机号" onchange="jiaoyan()" />
+						<input id="userID" type="hidden" th:value="${user.id}" />
+					</form>
+					<button name="注册" class="btn_zhuce" id="zc" onclick="zc()">修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

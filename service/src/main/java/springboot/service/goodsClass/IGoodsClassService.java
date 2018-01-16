@@ -15,6 +15,8 @@ public interface IGoodsClassService {
 	public int update(GoodsClass goodsClass);
 
 	public List<GoodsClass> findBypage(int first, int last);
+	
+	public GoodsClass findById(String id);
 
 	public List<GoodsClass> findByName(String name);
 }

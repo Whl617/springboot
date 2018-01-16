@@ -6,6 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="findAll"  resultMap="goodsClass" >
         select * from goodsClass 
     </select>
+    <select id="findById"  resultMap="goodsClass" >
+        select * from goodsClass where id=#{id}
+    </select>
     
     <select id="findByName"  resultMap="goodsClass" parameterType="java.lang.String">
         select * from goodsClass where name= #{name}

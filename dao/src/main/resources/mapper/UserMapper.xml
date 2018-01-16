@@ -22,15 +22,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert" parameterType="springboot.model.user.User">
 		insert into user
-		(id,name,password,phone,type)
-		values(#{id},#{name},#{password},#{phone},#{type})
+		(id,name,password,phone,type,money)
+		values(#{id},#{name},#{password},#{phone},#{type},#{money})
 	</insert>
 	
 	
 	<update id="update" parameterType="springboot.model.user.User">
 		update user SET
 		name=#{name},password=#{password},
-		phone=#{phone},type=#{type}
+		phone=#{phone},type=#{type},money=#{money}
 		where id=#{id}
 	</update>
 	
@@ -46,5 +46,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="password" column="password"/>
         <result property="phone" column="phone"/>
         <result property="type" column="type"/>
+        <result property="money" column="money"/>
     </resultMap>
 </mapper>

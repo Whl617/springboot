@@ -9,7 +9,7 @@ public class Goods {
 	private String context;
 	private String goodsClass;
 	private String image;
-
+    private int type;
 	public String getId() {
 		return id;
 	}
@@ -74,6 +74,14 @@ public class Goods {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }

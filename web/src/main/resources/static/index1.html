@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>jquery,bootstrap实现的用户名片信息提示</title>
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+	<link href="http://www.zuidaima.com/resource/css/bootstrap.min.css?v=20140118" rel="stylesheet" />
+	<link href="http://www.zuidaima.com/resource/css/javaniu.css?v=20140303" rel="stylesheet" />
+	<style type="text/css">
+
+
+	.hovercard {
+		display: none;
+		position: absolute;
+		height: 150px;
+		padding: 20px 20px 20px 90px;
+	}
+	 </style>
+  </head>
+  <body>
+    <div class="hovercard main">
+		<div class="hovercontent">
+		<div class="right_bar">
+			<div class="user">
+				<div class="row-fluid margin_top10">
+					<div class="span6"><img alt="最代码官方的gravatar头像" src="http://www.zuidaima.com/uploads/1/201312/20131204223633377.jpg"></div>
+					<div class="span6">
+						<!-- 
+						<p>屌丝1级</p>
+						-->
+						<p>ID：1</p>
+						<p>牛币：2692</p>
+						<p>贡献：89716</p>
+					</div>
+				</div>
+				<div class="margin_top10">
+					<img alt="内容管理员" src="http://www.zuidaima.com/resource/img/content_manager.png">&nbsp;&nbsp;
+				</div>
+				<div class="margin_top10">
+					简介：我是一个java老牛
+				</div>
+				<div class="margin_top10">
+					最近登录：2014-03-15 16:28:44
+				</div>
+				<div class="row-fluid margin_top10 show-grid">
+					<a content_id="1550463816435849" href="javascript:void(0)" class="offset1 span4 follow" id="follow">关注</a>
+				<!-- 
+				<a class=" span5 teacher" href="javascript:void(0)">拜师</a>
+				 -->
+				<a content_id="1550463816435849" href="/user/message.htm?uuid=1550463816435849" class="offset2 span4 message" id="message">私信</a>
+			</div>
+			</div>
+		</div>
+	</div>
+	</div></div>
+
+<div class="profile">
+<img alt="最代码官方的gravatar头像" src="http://www.zuidaima.com/uploads/1/201312/20131204223633377.jpg">
+</div>
+
+<br><br>
+
+<div class="profile">
+<img alt="最代码官方的gravatar头像" src="http://www.zuidaima.com/uploads/1/201312/20131204223633377.jpg">
+</div>
+
+<script type="text/javascript">
+$(function() {
+	var timeout;
+
+$('.profile').hover(function() {
+
+    pos = $(this).offset();
+
+    timeout = setTimeout(function() {
+
+        $('.hovercard').fadeIn().css({
+            'top': pos.top - 20 + 'px',  // subtract 20px to account for padding
+            'left': pos.left - 20 + 'px'
+        });
+
+    }, 500);
+
+}, function() {
+    clearTimeout(timeout);
+});
+
+$('.hovercard').mouseleave(function() {
+    $('.hovercard').fadeOut();
+});
+
+});
+</script>
+  </body>
+</html>
+

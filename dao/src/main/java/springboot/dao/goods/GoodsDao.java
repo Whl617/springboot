@@ -24,4 +24,5 @@ public interface GoodsDao {
 	public int updateGoods(Goods goods);
 	
 	public int deleteGoods(String id);
+	
 }

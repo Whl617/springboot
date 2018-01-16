@@ -7,17 +7,83 @@
 <script type="text/javascript" src="js/jquery-2.0.0.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<link href="css/javaniu.css" rel="stylesheet" />
 <title>home</title>
 <script type="text/javascript">
+$(function() {
+	var timeout;
+
+$('.profile').hover(function() {
+
+    pos = $(this).offset();
+
+    timeout = setTimeout(function() {
+
+        $('.hovercard').fadeIn().css({
+            'top': pos.top - 50 + 'px',  // subtract 20px to account for padding
+            'left': pos.left - 50 + 'px'
+        });
+
+    }, 500);
+
+}, function() {
+    clearTimeout(timeout);
+});
+
+$('.hovercard').mouseleave(function() {
+    $('.hovercard').fadeOut();
+});
+
+});
+</script>
+<style type="text/css">
+	
+
+	.hovercard {
+		display: none;
+		position: absolute;
+		height: 100px;
+		padding: 20px 20px 20px 90px;
+		z-index: 1;
+	}
+	 </style>
+<script type="text/javascript">
+   function addM(){
+	   var money=prompt("输入充值金额");
+	   var fix_amountTest=/^(([1-9]\d*)|\d)(\.\d{1,2})?$/;
+	   if(money!=null){
+		   if( fix_amountTest.test(money)==false){
+			   alert("请输入正确金额");
+		   }
+		   else{
+			   $.ajax({
+					url : '/addmoney?money='+money,
+					type : 'post',
+					dataType : "json",
+					success : function(data) {
+						if (data.code == 1) {
+							alert(data.message);
+							window.location.href = "/home";
+						} else {
+							alert(data.message);
+						}
+					}
+				});
+		   }
+	   }
+	   
+   }
+ 
 	$(document).ready(function() {
-
+		var i = 1;
 		$("img").each(function() {
-			if (parseInt(this.style.width) > 1000) {
-				this.style.width = '100%';
-				this.style.height = '100%';
-
+			if (i > 1) {
+				$(this).css('max-width', '540px');
+				$(this).css('max-height', '300px');
+				$(this).css('height', 'auto');
+				$(this).css('width', 'auto');
 			}
-
+			i++;
 		});
 	});
 
@@ -40,36 +106,57 @@
 	};
 </script>
 </head>
-<body style="background: url(../images/bg.jpg) repeat 0px 0px">
+<body style="background-color: #fff;">
+<div class="hovercard main"  th:if="${session.user!=null}">
+		<div class="hovercontent">
+		<div class="right_bar">
+			<div class="user">
+				<div class="row-fluid margin_top10" style="width: 300px;height: auto;">
+					<div class="span6">
+						<p th:text="'姓名:&nbsp;'+${session.user.name}"></p>
+						<p th:text="'身份:&nbsp;'+${session.user.type}"></p>
+						<p th:text="'余额:&nbsp;'+${#numbers.formatDecimal(session.user.money, 0, 2)}+'&nbsp;元'" th:if="${session.user.money}>0"></p>
+						<p th:text="'余额:&nbsp;'+${session.user.money}+'&nbsp;元'" th:unless="${session.user.money}>0"></p>
+						<a href="/UUPage">个人信息修改</a>&nbsp;&nbsp;<a onclick="addM()">账户充值</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 	<div class="container-fluid">
 		<div class="container-fluid">
 			<nav class="navbar navbar-default " role="navigation">
 				<div class="container-fluid">
 					<div class="col-md-10">
 						<div class="navbar-header">
-							<img src="1.jpg" height="50" width="100" />
+							<img src="1.jpg" height="50" width="auto" />
 						</div>
 						<div>
 							<ul class="nav navbar-nav">
-								<li class="active"><a href="/home" style="color: red;">首页</a></li>
-								<li><a href="/addArtPage" style="color: red;"
-									th:if="${session.user != null}">发表推荐</a></li>
+								<li><a href="/home" style="color: #e83232;">首页</a></li>
+								<li><a href="/getUserArticle?page=1" style="color: #e83232;"
+									th:if="${session.user != null}">我的推荐</a></li>
+								<li><a href="/findAllG?page=1" style="color: #e83232;" th:if="${session.user != null}">我的购物记录</a></li>
+								<li><a href="/findByShop?page=1" style="color: #e83232;"
+									th:if="${session.user != null} and (${session.user.type=='商户'})">我的商铺</a></li>
+							    <li><a href="/findAllB?page=1" style="color: #e83232;" th:if="${session.user != null} and (${session.user.type=='商户'})">我的售出记录</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-md-2">
 						<div>
 							<ul class="nav navbar-nav" th:if="${session.user != null}">
-								<li><a href=""
-									style="color: red; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;"
+								<li><a href="" class="profile"
+									style="color: #e83232; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 120px;"
 									th:text="'hello,'+${session.user.name}"></a></li>
 								<li><a href="" onclick="logout()"
-									style="color: red; width: 100%;">注销</a></li>
+									style="color: #e83232; width: 100%;">注销</a></li>
 							</ul>
 							<ul class="nav navbar-nav" th:if="${session.user == null}"
 								style="text-align: center;">
-								<li><a href="login.html" style="color: red; width: 120px;">登陆</a></li>
-								<li><a href="regist.html" style="color: red;">注册</a></li>
+								<li><a href="login.html" style="color: #e83232; width: 120px;">登陆</a></li>
+								<li><a href="regist.html" style="color: #e83232;">注册</a></li>
 							</ul>
 						</div>
 					</div>
@@ -79,33 +166,36 @@
 	</div>
 	<div class="container">
 		<div class="col-md-3">
-			<h3 style="color: white;"><a style="color: white;" th:href="@{/getAllArticle(page=1,point=point)}">*用户推荐贴</a></h3>
+			<h3 style="color: white;">
+				<a style="color: #e83232;"
+					th:href="@{/getAllArticle(page=1,point=point)}">用户推荐贴</a>
+			</h3>
 			<ul class="list-group" style="text-align: center;">
-				<li class="list-group-item" th:each="article : ${articles1}">
-				<a
-					th:href="@{/findArt(id=${article.id})}"				
-					style="color: #F88017;display:block;word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-					th:text="${article.goodsclass}+' : '+${article.name}">
-				</a></li>
+				<li class="list-group-item" th:each="article : ${articles1}"><a
+					th:href="@{/findArt(id=${article.id})}"
+					style="color: #F88017; display: block; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+					th:text="${article.goodsclass}+' : '+${article.name}"> </a></li>
 			</ul>
 		</div>
 		<div class="col-md-6" style="text-align: center;">
-			<h1  th:text="${article.name}+''"></h1>
+			<h1 th:text="${article.name}+''"></h1>
 			<div class="col-md-6">
-			<small  th:text="'作者:'+${article.username}"></small>
+				<small th:text="'作者:'+${article.username}"></small>
 			</div>
 			<div class="col-md-6">
-			<small th:text="'浏览量 :'+${article.point}"></small>
+				<small th:text="'浏览量 :'+${article.point}"></small>
 			</div>
-			
 			<div th:utext="${article.content}"></div>
 		</div>
 		<div class="col-md-3">
-			<h3 style="color: white;"><a style="color: white;" th:href="@{/getAllArticle(page=1,point=point)}">*用户推荐贴</a></h3>
+			<h3 style="color: white;">
+				<a style="color: #e83232;"
+					th:href="@{/getAllArticle(page=1,point=point)}">用户推荐贴</a>
+			</h3>
 			<ul class="list-group">
 				<li class="list-group-item" th:each="article : ${articles2}"><a
 					th:href="@{/findArt(id=${article.id})}"
-					style="color: #F88017; display:block;word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+					style="color: #F88017; display: block; word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
 					th:text="${article.goodsclass}+' : '+${article.name}"></a></li>
 			</ul>
 		</div>

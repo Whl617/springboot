@@ -36,4 +36,22 @@ public class ArticleService implements IArticleService{
 		return articleDao.update(article);
 	}
 
+	@Override
+	public List<Article> findUser(int first, int last, String username) {
+		// TODO Auto-generated method stub
+		return articleDao.findUser(first, last, username);
+	}
+
+	@Override
+	public int delete(String id) {
+		// TODO Auto-generated method stub
+		return articleDao.delete(id);
+	}
+
+	@Override
+	public int findMAll() {
+		// TODO Auto-generated method stub
+		return articleDao.findMAll();
+	}
+
 }

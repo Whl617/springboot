@@ -8,6 +8,7 @@ public class Article {
 	private String name;
 	private String content;
 	private String username;
+	private String userid;
 	private String goodsclass;
 	private Timestamp createtime;
 	private int point;
@@ -53,6 +54,12 @@ public class Article {
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	
 	
