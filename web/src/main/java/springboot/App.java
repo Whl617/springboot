@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Configuration
 @ComponentScan
 @MapperScan("springboot.dao")
+//test
 public class App {
 
 	private Logger logger = Logger.getLogger(App.class);
@@ -35,15 +36,15 @@ public class App {
 	@Bean
 	public EmbeddedServletContainerCustomizer containerCustomizer() {
 
-	    return new EmbeddedServletContainerCustomizer() {
-	        @Override
-	        public void customize(ConfigurableEmbeddedServletContainer container) {
+		return new EmbeddedServletContainerCustomizer() {
+			@Override
+			public void customize(ConfigurableEmbeddedServletContainer container) {
 
-	            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
+				ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
 
-	            container.addErrorPages(error404Page);
-	        }
-	    };
+				container.addErrorPages(error404Page);
+			}
+		};
 	}
 	/*
 	 * @RequestMapping(value="/hello") public String hello(){

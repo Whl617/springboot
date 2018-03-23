@@ -46,6 +46,10 @@ public class ArticleController {
 	IArticleService articleService;
 	@Autowired
 	IGoodsClassService goodsClassService;
+	@RequestMapping(value = "/test123")
+	public String test(){
+		return "test123";
+	}
 
 	@RequestMapping(value = "/getAllArticle")
 	public String get(@RequestParam(name = "point") String point, HashMap<String, Object> hashMap,
