@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:if="${session.user}!=null">
+		<table>
+			<tr>
+				<td >
+					<input value="user name" data-th-value="${session.user.name}"/>
+					<input value="tip" th:value="#{home.wellcome}"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<a th:href="@{/login?name=admin5&pw=123}"> 12`<span th:insert="commons/footer :: copy"/> </span>
+		</a>
+	</div>
+</body>
+
+</html>

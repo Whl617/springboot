@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan
 @MapperScan("springboot.dao")
 //test
+//test2
 public class App {
 
 	private Logger logger = Logger.getLogger(App.class);
